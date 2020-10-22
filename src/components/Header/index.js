@@ -1,7 +1,7 @@
 import React from 'react'
-import {Link} from 'react-router-dom'
-import Avatar from '@material-ui/core/Avatar';
 
+import Button from '@material-ui/core/Button'
+import Avatar from '@material-ui/core/Avatar';
 
 import './Header.css'
 
@@ -13,8 +13,16 @@ function Header() {
                         src={require('../../asstes/logo.png')}
                         className="logo-macohin"    
                     />
-                    <div className="avatar">
-                        <Avatar >G</Avatar>
+                    <Button>Novo Cálculo</Button>
+                    <Button>Cálculos Cadastrados</Button>
+                    <Button>Jurisprudência</Button>
+                    <Button>Suporte</Button>
+                    <Button>Parceria Macohin</Button>
+
+
+                    <div>
+                        {/* onClick=handleUserProfile */}
+                        <Avatar className="avatar" >G</Avatar> 
                     </div>   
             </div>
         </header>
