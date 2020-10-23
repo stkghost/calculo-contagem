@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom'
 import './Header.css'
 import Dropdown from '../Drowpdown'
 
+
 function Header() {
 
     const [click, setClick] = useState(false)
@@ -11,6 +12,16 @@ function Header() {
 
     const handleClick = () => setClick(!click)
     const closeMobileMenu = () => setClick(false)
+
+    
+        // const goToRegister = () => {
+
+        //    return <Route exact path='/' component={RegisterScreen} />
+        // }
+        // const goToLogin = () => {
+        //     return <Route exact path='/' component={LoginScreen} />
+        // }
+        
 
     const onMouseEnter = () => {
         if (window.innerWidth < 960) {
@@ -39,13 +50,7 @@ function Header() {
                 <div className="menu-icon" onClick={handleClick}>
                     <i className={click ? 'fas fa-times' : 'fas fa-bars'}></i>
                 </div>
-                <ul className={click ? 'nav-menu active' : 'nav-menu'}>
-                    {/* <li className='nav-item'>
-                        <Link to='/' className='nav-links' onClick={closeMobileMenu}>
-                            Nova contagem
-                        </Link>
-                    </li> */}
-                    
+                <ul className={click ? 'nav-menu active' : 'nav-menu'}>                  
                     <li className='nav-item'
                         onMouseEnter={onMouseEnter}
                         onMouseLeave={onMouseLeave}
@@ -61,50 +66,15 @@ function Header() {
                         </Link>
                     </li>
                     <li className='nav-item'>
-                        <Link to='/sign-up' className='nav-links-mobile' onClick={closeMobileMenu}>
+                        <Link to='/register' className='nav-links-mobile' onClick={closeMobileMenu}>
                             Registar-se
                         </Link>
+                        
                     </li>
-
                 </ul>
                 <Button />
             </nav>
         </> 
     )
 }
-
 export default Header 
-
-
-
-
-// import React from 'react'
-
-// import Button from '@material-ui/core/Button'
-// import Avatar from '@material-ui/core/Avatar';
-
-// import './Header.css'
-
-// function Header() {
-//     return(
-//         <header id="main-header">
-//             <div className="header-content">
-//                     <img 
-//                         src={require('../../asstes/logo.png')}
-//                         className="logo-macohin"    
-//                     />
-//                     <Button variant="contained"color="primary">Novo Cálculo</Button>
-//                     <Button variant="contained"color="primary">Cálculos Cadastrados</Button>
-//                     <Button variant="contained"color="primary">Jurisprudência</Button>
-//                     <Button variant="contained"color="primary">Suporte</Button>
-//                     <Button variant="contained"color="primary">Parceria Macohin</Button>
-//                     <div>
-//                         {/* onClick=handleUserProfile */}
-//                         <Avatar className="avatar" >G</Avatar> 
-//                     </div>   
-//             </div>
-//         </header>
-//     )
-// }
-
-// export default Header;

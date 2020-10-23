@@ -2,9 +2,11 @@ import React, {Component} from 'react'
 import {BrowserRouter, Switch, Route} from 'react-router-dom'
 import './App.css'
 import firebase from '../firebase.js'
-import Homescreen from './Homescreen'
-import Loginscreen from './LoginScreen'
+import HomeScreen from './HomeScreen'
+import LoginScreen from './LoginScreen'
 import Header from './Header'
+import RegisterScreen from './RegisterScreen'
+
 
 class App extends Component {
 
@@ -24,8 +26,9 @@ class App extends Component {
       <BrowserRouter>
         <Header/>
         <Switch>
-          <Route exact path="/" component={Homescreen}/>
-          <Route exact path="/" component={Loginscreen}/>
+          <Route exact path="/login" component={LoginScreen}/>
+          <Route exact path="/register" component={RegisterScreen}/>
+          <Route exact path="/home" component={HomeScreen}/>          
 
         </Switch>
       </BrowserRouter>

@@ -1,6 +1,6 @@
-import app from 'firebase/app'; ////exports firebase.app
-import 'firebase/database' //exports firebase.database
-import 'firebase/auth'; //exports firebase.auth
+import app from 'firebase/app'; ////import firebase.app
+import 'firebase/database' //import firebase.database
+import 'firebase/auth'; //import firebase.auth
 
 
     //configurações do Firebase
@@ -18,10 +18,12 @@ import 'firebase/auth'; //exports firebase.auth
 
 
 //class para inicializar o firebase
-class firebase {
+class Firebase {
     constructor(){
         //método constructo para inicializar o Firebase
         app.initializeApp(firebaseConfig);
+
+        this.app = app.database()
     }
     //metodo login recebe login e password
     //retorna o metódo signInWithEmailAndPassword recebendo o e-mail e password
@@ -49,6 +51,9 @@ class firebase {
             app.auth().onAuthStateChanged(resolve)
         })
     }
+    getCurrent(){
+        return app.auth().currentUser && app.auth().currentUser.email
+    }
 }
 
-export default new firebase()
+export default new Firebase()

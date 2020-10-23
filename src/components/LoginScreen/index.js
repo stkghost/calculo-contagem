@@ -1,9 +1,106 @@
 import React, {Component} from 'react'
+import {withRouter, Link} from 'react-router-dom'
+import {TextField, Button } from '@material-ui/core'
+import firebase from '../../firebase'
+import './Login.css'
 
-export default class Loginscreen extends Component {
+class LoginScreen extends Component {
+
+    constructor(props){
+        super(props)
+        this.state = {
+            email: '',
+            password: ''
+        }
+
+        this.entrar = this.entrar.bind(this)
+        this.login = this.login.bind(this)
+
+    }
+
+    entrar(e){
+        
+        e.preventDefaul()
+        this.login()
+    }
+
+    componentDidMount(){
+        //verificar se tem algum user logado
+        if(firebase.getCurrent()){
+            return this.props.history.replace('/home')
+        }
+    }
+
+    login = async () => {
+
+        const {email, password} = this.state
+
+        try{
+            await firebase.login(email, password)
+            .catch((error) => {
+                if(error.code === 'auth/user-not-found') {
+                    alert('Este usuario não existe!')
+                }else {
+                    alert('Codigo de erro:' + error.code)
+                    return null
+                }
+            })
+            this.props.history.replace('/home')
+
+        }catch(error){
+            alert(error.massage)
+        }
+    }
+
     render() {
         return(
-            <div>Loginscreen</div>
+            <div>
+                <form onSubmit={this.entrar} id="login">
+                    <h3>Digite seu E-mail e Senha</h3>
+                    <input 
+                    className="form-input"
+                    autoComplete="off"
+                    value={this.state.email}
+                    onChange={(e) => this.setState({email: e.target.value})}
+                    />
+                    <input 
+                    className="form-input"
+                    autoComplete="off"
+                    value={this.state.password}
+                    onChange={(e) => this.setState({password: e.target.value})}
+                    />
+                    {/* <TextField
+                        className="form-input"
+                        id="filled-primary"
+                        label="E-mail"
+                        type="Email"
+                        variant="filled"
+                        color="primary"
+                        autoComplete="off"
+                        value={this.state.email}
+                        onChange={(e) => this.setState({email: e.target.value})}
+                    />
+                    <TextField
+                        className="form-input"
+                        id="filled-primary"
+                        label="Senha"
+                        type="Password"
+                        variant="filled"
+                        color="primary"
+                        autoComplete="off"
+                        value={this.state.password}
+                        onChange={(e) => this.setState({password: e.target.value})}
+                    /> */}
+                    <Button type="submit"> Entrar</Button>
+                    
+                    <div className="form-links">
+                        <Link to="/register">Não possui uma conta? Registrar-se</Link>
+                        <Link to="/newPassord">Esqueci minha senha</Link>
+                    </div>
+
+                </form>
+            </div>
         )
     }
 }
+export default withRouter(LoginScreen)
