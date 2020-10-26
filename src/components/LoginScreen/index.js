@@ -13,51 +13,51 @@ class LoginScreen extends Component {
             password: ''
         }
 
-        this.entrar = this.entrar.bind(this)
-        this.login = this.login.bind(this)
+        this.entrar = this.entrar.bind(this);
+        this.login = this.login.bind(this);
+  }
 
+  componentDidMount(){
+    //Verificar se tem algum usuario logado!
+    if(firebase.getCurrent()){
+      return this.props.history.replace('home');
     }
+  }
 
-    entrar(e){
-        
-        e.preventDefaul()
-        this.login()
-    }
+  entrar(e){
+    e.preventDefault();
 
-    componentDidMount(){
-        //verificar se tem algum user logado
-        if(firebase.getCurrent()){
-            return this.props.history.replace('/home')
+    this.login();
+  }
+
+  login = async () => {
+    const {email, password} = this.state;
+
+    try{
+
+      await firebase.login(email, password)
+      .catch((error)=>{
+        if(error.code === 'auth/user-not-found'){
+          alert('Este usuario não existe!');
+        }else{
+          alert('Codigo de erro:' + error.code);
+          return null;
         }
+      });
+      this.props.history.replace('/home');
+
+    }catch(error){
+      alert(error.message);
     }
 
-    login = async () => {
-
-        const {email, password} = this.state
-
-        try{
-            await firebase.login(email, password)
-            .catch((error) => {
-                if(error.code === 'auth/user-not-found') {
-                    alert('Este usuario não existe!')
-                }else {
-                    alert('Codigo de erro:' + error.code)
-                    return null
-                }
-            })
-            this.props.history.replace('/home')
-
-        }catch(error){
-            alert(error.massage)
-        }
-    }
+  }
 
     render() {
         return(
             <div>
                 <form onSubmit={this.entrar} id="login">
                     <h3>Digite seu E-mail e Senha</h3>
-                    <input 
+                    {/* <input 
                     className="form-input"
                     autoComplete="off"
                     value={this.state.email}
@@ -68,8 +68,8 @@ class LoginScreen extends Component {
                     autoComplete="off"
                     value={this.state.password}
                     onChange={(e) => this.setState({password: e.target.value})}
-                    />
-                    {/* <TextField
+                    /> */}
+                    <TextField
                         className="form-input"
                         id="filled-primary"
                         label="E-mail"
@@ -90,8 +90,9 @@ class LoginScreen extends Component {
                         autoComplete="off"
                         value={this.state.password}
                         onChange={(e) => this.setState({password: e.target.value})}
-                    /> */}
-                    <Button type="submit"> Entrar</Button>
+                    />
+                    {/* <button type="submit" >Entrar</button> */}
+                    <Button type="submit" > Entrar</Button>
                     
                     <div className="form-links">
                         <Link to="/register">Não possui uma conta? Registrar-se</Link>

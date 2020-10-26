@@ -1,80 +1,51 @@
 import React, {useState}from 'react'
-import {Button} from '../Button'
-import {Link} from 'react-router-dom'
+import {Link, withRouter} from 'react-router-dom'
 import './Header.css'
-import Dropdown from '../Drowpdown'
+// import firebase from '../../firebase'
+import { Button } from '@material-ui/core'
 
 
-function Header() {
 
-    const [click, setClick] = useState(false)
-    const [dropdown, setDropdown] = useState(false)
+const Header = (props) => {
 
-    const handleClick = () => setClick(!click)
-    const closeMobileMenu = () => setClick(false)
+    const [userState, setUserState] = useState(null)
 
-    
-        // const goToRegister = () => {
 
-        //    return <Route exact path='/' component={RegisterScreen} />
-        // }
-        // const goToLogin = () => {
-        //     return <Route exact path='/' component={LoginScreen} />
-        // }
-        
-
-    const onMouseEnter = () => {
-        if (window.innerWidth < 960) {
-            setDropdown(false)
-        } else {
-            setDropdown(true)
-        }
+    const logout = () => {
+        console.log("User saiu")
     }
 
-    const onMouseLeave = () => {
-        if (window.innerWidth < 960) {
-            setDropdown(false)
-        } else {
-            setDropdown(false)
-        }
+
+    let buttons;
+
+    if(userState != null){
+        buttons = (
+            <React.Fragment>
+                      <li><Button onClick={logout}>Sair</Button></li>
+                      <li><Button onClick={logout}>Sair</Button></li>
+            </React.Fragment>
+        )
+    }else {
+        buttons= (
+            <React.Fragment>
+                <li><Link to="/register">Registra-se</Link></li>
+                <li><Link to="/login">Entrar</Link></li>
+
+            </React.Fragment>
+        )
     }
-    return (
-        <>
-            <nav className="navbar">
-                
-                    <Link to='https://macohin.com' className="logo">
-                        <img className="logo" src={require('../../asstes/macohin-branca.png')}>
-                        </img>
-                    </Link>
-                
-                <div className="menu-icon" onClick={handleClick}>
-                    <i className={click ? 'fas fa-times' : 'fas fa-bars'}></i>
-                </div>
-                <ul className={click ? 'nav-menu active' : 'nav-menu'}>                  
-                    <li className='nav-item'
-                        onMouseEnter={onMouseEnter}
-                        onMouseLeave={onMouseLeave}
-                    >
-                        <Link to='/services' className='nav-links' onClick={closeMobileMenu}>
-                            Suporte <i className='fas fa-caret-down' />
-                        </Link>
-                        {dropdown && <Dropdown />}
-                    </li>
-                    <li className='nav-item'>
-                        <Link to='/login' className='nav-links' onClick={closeMobileMenu}>
-                            Entrar
-                        </Link>
-                    </li>
-                    <li className='nav-item'>
-                        <Link to='/register' className='nav-links-mobile' onClick={closeMobileMenu}>
-                            Registar-se
-                        </Link>
-                        
-                    </li>
-                </ul>
-                <Button />
-            </nav>
-        </> 
+
+    return(
+        <nav>
+            <ul>
+                <li><Link to="/home">Home</Link></li>
+            </ul>
+            <ul>
+                <li><Link to="/create">New Calc</Link></li>
+                {buttons}
+            </ul>
+        </nav>
     )
 }
-export default Header 
+
+export default withRouter(Header) 

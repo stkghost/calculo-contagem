@@ -154,3 +154,8 @@
       display: none;
     }
   }
+
+.icon-user {
+  background: #1888ff;
+  color: #fff
+}
