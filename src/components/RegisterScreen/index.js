@@ -20,16 +20,16 @@ class RegisterScreen extends Component{
     }
 
     register(e){
-        e.preventdefault()
+        e.preventDefault()
 
         this.onRegister();
     }
 
     onRegister = async() => {
         try{
-            const { name, email, password} = this.state
+            const { name, email, password, cpf} = this.state
             
-            await firebase.register(name, email, password)
+            await firebase.register(name, email, password, cpf)
             this.props.history.replace('/home')
         }catch(error){
             alert(error.messege)
@@ -85,7 +85,7 @@ class RegisterScreen extends Component{
                         value={this.state.password}
                         onChange={(e) => this.setState({password: e.target.value})}
                     />
-                    <Button type="submit" > Registra-se</Button>
+                    <Button type="submit" > Registrar-se</Button>
 
                     <Link to="/login" className="possui-conta">Já possui uma conta? Entrar</Link>
                 </form>

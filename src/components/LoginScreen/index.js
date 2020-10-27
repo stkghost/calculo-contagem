@@ -57,18 +57,6 @@ class LoginScreen extends Component {
             <div>
                 <form onSubmit={this.entrar} id="login">
                     <h3>Digite seu E-mail e Senha</h3>
-                    {/* <input 
-                    className="form-input"
-                    autoComplete="off"
-                    value={this.state.email}
-                    onChange={(e) => this.setState({email: e.target.value})}
-                    />
-                    <input 
-                    className="form-input"
-                    autoComplete="off"
-                    value={this.state.password}
-                    onChange={(e) => this.setState({password: e.target.value})}
-                    /> */}
                     <TextField
                         className="form-input"
                         id="filled-primary"
@@ -91,7 +79,6 @@ class LoginScreen extends Component {
                         value={this.state.password}
                         onChange={(e) => this.setState({password: e.target.value})}
                     />
-                    {/* <button type="submit" >Entrar</button> */}
                     <Button type="submit" > Entrar</Button>
                     
                     <div className="form-links">

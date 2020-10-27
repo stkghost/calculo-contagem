@@ -37,7 +37,7 @@ class Firebase {
     }
 
     //metodo register para receber dados pessoais e criar usuário com email e password
-    async register(name, email, password) {
+    async register(name, email, password, cpf) {
         await app.auth().createUserWithEmailAndPassword(email, password)
         
         //pegar o id do usuário para referenciar no banco de dados
@@ -46,6 +46,7 @@ class Firebase {
         //retornar um novo usuário na database
         return app.database().ref('usuarios').child(uid).set({
             name: name,
+            cpf: cpf
         })
     }
     //função para verificar se o user está logado ou não
@@ -63,7 +64,9 @@ class Firebase {
             console.log(err)
         })
     }
-
+    isAuthenticated() {
+        
+    }
     
 }
 
