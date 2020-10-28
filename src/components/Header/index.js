@@ -7,6 +7,8 @@ import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
+import firebase from '../../firebase'
+import { withRouter, Redirect} from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Header() {
+export default function Header({history}) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -33,7 +35,9 @@ export default function Header() {
 
   const handleClose = () => {
     setAnchorEl(null);
-  };
+    firebase.logout();
+    return <Redirect to="/login"/>
+  }
 
   return (
     <div className={classes.root}>
@@ -67,11 +71,10 @@ export default function Header() {
                 open={open}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>My account</MenuItem>
+                <MenuItem onClick={handleClose}>Meu perfil</MenuItem>
+                <MenuItem onClick={handleClose}>Sair</MenuItem>
               </Menu>
             </div>
-
         </Toolbar>
       </AppBar>
     </div>

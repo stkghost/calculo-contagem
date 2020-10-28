@@ -26,7 +26,6 @@ class LoginScreen extends Component {
 
   entrar(e){
     e.preventDefault();
-
     this.login();
   }
 

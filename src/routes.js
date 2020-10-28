@@ -14,7 +14,6 @@ class Routes extends Component {
     }
     componentDidMount() {
       firebase.isInitialized().then(resultado => {
-  
         //devolve o usuário
         this.setState({firebaseInitialized: resultado})
       })
@@ -32,8 +31,8 @@ class Routes extends Component {
           <Header/>
           <Switch>
             <Route exact path="/login" component={LoginScreen}/>
-            <Route  path="/register" component={RegisterScreen}/>
-            <Route  path="/home" component={HomeScreen}/>          
+            <Route exatc path="/register" component={RegisterScreen}/>
+            <Route exact path="/home" component={HomeScreen}/>          
           </Switch>
         </BrowserRouter>
       ) : (

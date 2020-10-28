@@ -25,7 +25,7 @@ class Firebase {
         app.initializeApp(firebaseConfig);
 
         this.app = app.database()
-        this.auth = app.auth()
+        // this.auth = app.auth()
     }
     //metodo login recebe login e password
     //retorna o metódo signInWithEmailAndPassword recebendo o e-mail e password
@@ -60,9 +60,7 @@ class Firebase {
     }
     
     async logout(){
-        await app.auth().signOut().catch(err => {
-            console.log(err)
-        })
+        await app.auth().signOut()
     }
     isAuthenticated() {
         
