@@ -30,8 +30,11 @@ class Firebase {
     //metodo login recebe login e password
     //retorna o metódo signInWithEmailAndPassword recebendo o e-mail e password
     async login(email, password) {
-        const user = await app.auth().signInWithEmailAndPassword(email, password).catch(err => {
-            console.log(err)
+        const user = await app.auth().signInWithEmailAndPassword(email, password)
+        
+        .catch(error => {
+            const errorCode = error.code;
+            const errorMessege = error.messege;
         })
         return user
     }
@@ -40,6 +43,10 @@ class Firebase {
     async register(name, email, password, cpf) {
         await app.auth().createUserWithEmailAndPassword(email, password)
         
+        .catch(error => {
+            const errorCode = error.code;
+            const errorMessege = error.messege;
+        })
         //pegar o id do usuário para referenciar no banco de dados
         const uid = app.auth().currentUser.uid
 

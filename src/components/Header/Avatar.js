@@ -15,7 +15,6 @@ const Avatar = () => {
   
     const handleMenu = (event) => {
       setAnchorEl(event.currentTarget);
-      console.log('Abriu')
     }
     const handleClose = async (e) => {
       e.preventDefault()
@@ -29,15 +28,14 @@ const Avatar = () => {
         history.push("/perfil")
     }
     return (
-        <div>
-            <IconButton
-                className="avatar-position"
+        <div className="avatar-position">
+            <IconButton  
                 aria-label="account of current user"
                 aria-controls="menu-appbar"
                 aria-haspopup="true"
                 onClick={handleMenu}
                 style={{
-                    color: '#e0e0e0', 
+                    color: '#e0e0e0',
                 }}
               >
                 <AccountCircleIcon fontSize="large"/>

@@ -5,6 +5,7 @@ import firebase from '../firebase.js'
 import HomeScreen from './HomeScreen'
 import LoginScreen from './LoginScreen'
 import RegisterScreen from './RegisterScreen'
+import PageNewCalc from './PageNewCalc'
 
 
 class App extends Component {
@@ -26,7 +27,8 @@ class App extends Component {
         <Switch>
           <Route exact path="/login" component={LoginScreen}/>
           <Route exact path="/register" component={RegisterScreen}/>
-          <Route exact path="/home" component={HomeScreen}/>          
+          <Route exact path="/home" component={HomeScreen}/>   
+          <Route exact path="/newCalc" component={PageNewCalc}/>          
         </Switch>
       </BrowserRouter>
     ) : (

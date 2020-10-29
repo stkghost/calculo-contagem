@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import './styles.css'
-
+import Header from '../Header'
 import TextField from '@material-ui/core/TextField';
 import dayjs from 'dayjs'
 import Button  from '@material-ui/core/Button';
 // import Card from '@material-ui/core/Card';
 
 
-export default class NewCalc extends Component {
+export default class PageNewCalc extends Component {
 
 constructor(props){
     super(props)
@@ -69,8 +69,10 @@ constructor(props){
 
 render() {
     return (
-
-             <div className="container">   
+        <div>
+            <Header />
+                <div className="container"> 
+               
                     <form>
                     <TextField
                         value={this.state.dataInicio}
@@ -97,8 +99,8 @@ render() {
                         {/* <button type="submit" onClick={this.calcular}>calcular</button> */}
                         <Button variant="contained" color="primary" onClick={this.calcular}>Salvar </Button>
                             <h3>{}</h3>
-                        
                     </form>
+                </div>
             </div>
         );
     }
