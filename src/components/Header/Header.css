@@ -1,0 +1,24 @@
+.link-menu {
+    text-decoration: none;
+    background-color: #e0e0e0;
+    color: #1c313a;
+    padding: 0 15px;
+    margin: 0 auto;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 35px;
+    width: 130px;
+    cursor: pointer;
+}
+
+.link-menu:hover {
+    text-decoration: none;
+    background-color: #aeaeae;
+}
+.avatar-position {
+    display: flex;
+    align-self: center; 
+    justify-self: center;
+}
