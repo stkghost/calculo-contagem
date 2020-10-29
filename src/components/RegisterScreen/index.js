@@ -18,6 +18,12 @@ class RegisterScreen extends Component{
         this.onRegister = this.onRegister.bind(this);
 
     }
+    componentDidMount(){
+        //Verificar se tem algum usuario logado!
+        if(firebase.getCurrent()){
+          return this.props.history.replace('home');
+        }
+      }
 
     register(e){
         e.preventDefault()

@@ -19,12 +19,6 @@ class Routes extends Component {
       })
     }
 
-    // PrivateRoute = ({component: Component, ...rest}) => {
-    //     <Route {... rest} render={props => (
-
-    //             <Component {...props}/>
-    //     )}/>
-    // }
     render(){
       return this.state.firebaseInitialized !== false ? (
         <BrowserRouter>

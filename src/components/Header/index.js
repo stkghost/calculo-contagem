@@ -1,60 +1,75 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
-import firebase from '../../firebase'
-import { withRouter, Redirect} from 'react-router-dom'
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-  title: {
-    flexGrow: 1,
-  },
-}));
-
-export default function Header({history}) {
-  const classes = useStyles();
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
+import './Header.css'
+import Burger from './Burger'
+// import { makeStyles } from '@material-ui/core/styles';
+// import IconButton from '@material-ui/core/IconButton';
+// import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+// import MenuItem from '@material-ui/core/MenuItem';
+// import Menu from '@material-ui/core/Menu';
+// import firebase from '../../firebase'
+import { withRouter, useHistory} from 'react-router-dom'
+import styled from 'styled-components'
 
 
+// const useStyles = makeStyles((theme) => ({
+//   root: {
+//     flexGrow: 1,
+//   },
+//   menuButton: {
+//     marginRight: theme.spacing(2),
+//   },
+//   title: {
+//     flexGrow: 1,
+//   },
+// }));
 
-  const handleMenu = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
+function Header() {
 
-  const handleClose = () => {
-    setAnchorEl(null);
-    firebase.logout();
-    return <Redirect to="/login"/>
-  }
+  const Nav = styled.nav `
+    width: 100%;
+    height: 90px;
+    background: #ccc;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+
+    .logo {
+      height: 75px;
+      width: 75px;
+      justify-self: center;
+    }
+`
+  // const history = useHistory();
+  // const classes = useStyles();
+  // const [anchorEl, setAnchorEl] = React.useState(null);
+  // const open = Boolean(anchorEl);
+
+  // const handleMenu = (event) => {
+  //   setAnchorEl(event.currentTarget);
+  // };
+
+  // const handleClose = async (e) => {
+  //   e.preventDefault()
+  //   setAnchorEl(null);
+
+  //   await firebase.logout(); 
+  //   history.push("/login")
+  // }
 
   return (
-    <div className={classes.root}>
-      <AppBar position="static">
-        <Toolbar>
-          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-            <MenuIcon />
-          </IconButton>
-            <div>
-              <IconButton
+    <div>
+            <Nav className="header-main">
+              <img className="logo"src={require('../../asstes/logo.png')}/>
+              
+              <Burger />
+              {/* <IconButton
                 aria-label="account of current user"
                 aria-controls="menu-appbar"
                 aria-haspopup="true"
                 onClick={handleMenu}
                 color="inherit"
               >
-                <AccountCircle />
+                <AccountCircleIcon />
               </IconButton>
               <Menu
                 id="menu-appbar"
@@ -69,14 +84,12 @@ export default function Header({history}) {
                   horizontal: 'right',
                 }}
                 open={open}
-                onClose={handleClose}
               >
                 <MenuItem onClick={handleClose}>Meu perfil</MenuItem>
                 <MenuItem onClick={handleClose}>Sair</MenuItem>
-              </Menu>
-            </div>
-        </Toolbar>
-      </AppBar>
+              </Menu> */}
+            </Nav>
     </div>
   );
 }
+export default withRouter(Header)
