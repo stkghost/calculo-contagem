@@ -11,11 +11,15 @@ class LoginScreen extends Component {
         super(props)
         this.state = {
             email: '',
-            password: ''
+            password: '',
+            messegeError: '',
         }
 
         this.entrar = this.entrar.bind(this);
         this.login = this.login.bind(this);
+        this.UserNotFound = this.UserNotFound.bind(this);
+        this.wrongEmail = this.wrongEmail.bind(this);
+        this.wrongPassword = this.wrongPassword.bind(this);
   }
 
   componentDidMount(){
@@ -24,10 +28,27 @@ class LoginScreen extends Component {
       return this.props.history.replace('home');
     }
   }
-
   entrar(e){
     e.preventDefault();
     this.login();
+  }
+
+  //metódos para tratamento de erro de login
+  UserNotFound = () => {
+    let state = this.state
+    state.messegeError =  'Usuário não encontrado'
+    this.setState(state)
+    
+  }
+  wrongEmail = () => {
+    let state = this.state
+    state.messegeError =  'E-mail incorreto'
+    this.setState(state)
+  }
+  wrongPassword = () => {
+    let state = this.state
+    state.messegeError =  'Senha incorreta'
+    this.setState(state)
   }
 
   login = async () => {
@@ -36,30 +57,30 @@ class LoginScreen extends Component {
     try{
 
       await firebase.login(email, password)
-      .catch((error)=>{
-        if(error.code === 'auth/user-not-found'){
-          alert('Este usuario não existe!');
-        }else{
-          alert('Codigo de erro:' + error.code);
-          return null;
-        }
-      });
-      this.props.history.replace('/home');
+      this.props.history.replace('home');
+      console.log('logado')
 
-    }catch(error){
-      alert(error.message);
-    }
-
+    }catch(error) {
+      const errorCode = error.code;
+      // const errorMessage = error.message;
+      if (errorCode === 'auth/wrong-password') {
+        this.wrongPassword()
+      } else if(errorCode === 'auth/invalid-email') {
+        this.wrongEmail()
+      } else if(errorCode === 'auth/user-not-found') {
+        this.UserNotFound()
+      }
+    };
   }
-
     render() {
         return(
             <div>
                 <form onSubmit={this.entrar} id="login">
                     <h3>Digite seu E-mail e Senha</h3>
+                    <h3 style={{color:'#ff0000'}}>{this.state.messegeError}</h3>
                     <TextField
                         className="form-input"
-                        id="filled-primary"
+                        id="filled-primary-email"
                         label="E-mail"
                         type="Email"
                         variant="filled"
@@ -70,7 +91,7 @@ class LoginScreen extends Component {
                     />
                     <TextField
                         className="form-input"
-                        id="filled-primary"
+                        id="filled-primary-password"
                         label="Senha"
                         type="Password"
                         variant="filled"

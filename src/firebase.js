@@ -2,8 +2,6 @@ import app from 'firebase/app'; ////import firebase.app
 import 'firebase/database' //import firebase.database
 import 'firebase/auth'; //import firebase.auth
 
-
-
     //configurações do Firebase
     let firebaseConfig = {
         apiKey: "AIzaSyBQhPDyiE0ySzRxI9rkLG5xO7w4IT5iob0",
@@ -31,11 +29,6 @@ class Firebase {
     //retorna o metódo signInWithEmailAndPassword recebendo o e-mail e password
     async login(email, password) {
         const user = await app.auth().signInWithEmailAndPassword(email, password)
-        
-        .catch(error => {
-            const errorCode = error.code;
-            const errorMessege = error.messege;
-        })
         return user
     }
 
@@ -43,14 +36,10 @@ class Firebase {
     async register(name, email, password, cpf) {
         await app.auth().createUserWithEmailAndPassword(email, password)
         
-        .catch(error => {
-            const errorCode = error.code;
-            const errorMessege = error.messege;
-        })
         //pegar o id do usuário para referenciar no banco de dados
         const uid = app.auth().currentUser.uid
 
-        //retornar um novo usuário na database
+        //retornar um novo usuário na database criando tabela com nome e cpf do usuário
         return app.database().ref('usuarios').child(uid).set({
             name: name,
             cpf: cpf
@@ -65,16 +54,11 @@ class Firebase {
     getCurrent(){
         return app.auth().currentUser && app.auth().currentUser.email
     }
-    
+
+    //função para logou do usuário
     async logout(){
         await app.auth().signOut()
     }
-    isAuthenticated() {
-        
-    }
-    
 }
-
-
 
 export default new Firebase()
