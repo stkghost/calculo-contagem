@@ -60,7 +60,7 @@ constructor(props){
                 console.log(PeriodoMesesTotal)
                 periodoDiasTotal = parseInt(periodoDiasTotal)
                 console.log(periodoDiasTotal)
-                alert(`Contribuição total: ${PeriodoContriTotal} Anos ${PeriodoMesesTotal}Meses e ${periodoDiasTotal} dias`)
+                alert(`Contribuição total: ${PeriodoContriTotal} Anos ${PeriodoMesesTotal} Meses e ${periodoDiasTotal} dias`)
             }
         }
         //função para o navegador não atualizar após o calculo
@@ -69,11 +69,11 @@ constructor(props){
 
 render() {
     return (
-        <div>
+            <div>
             <Header />
-                <div className="container"> 
-               
-                    <form>
+                <div className="manual-container"> 
+                    <form className="data-inputs">
+                        <h3>Nova Contribuição</h3>
                     <TextField
                         value={this.state.dataInicio}
                         id="date"
@@ -98,7 +98,7 @@ render() {
                     <h3>{this.state.dataFim}</h3>
                         {/* <button type="submit" onClick={this.calcular}>calcular</button> */}
                         <Button variant="contained" color="primary" onClick={this.calcular}>Salvar </Button>
-                            <h3>{}</h3>
+                    <h3>{}</h3>
                     </form>
                 </div>
             </div>
