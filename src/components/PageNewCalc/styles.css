@@ -1,11 +1,11 @@
 .manual-container  {
     display: flex;
+    flex-direction: column;
     background-color: #ffffff;
-    justify-content: start;
+    justify-content: center;
     align-items: center;
-    flex-direction: row;
+    width: auto;
     margin: 50px;
-    padding: 25px;
     border-radius: 5px;
     height: 250px;
     -webkit-box-shadow: 0px 0px 31px -4px #000000; 
@@ -13,5 +13,10 @@
 }
 
 .data-inputs {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
     margin: 15px;
 }
+

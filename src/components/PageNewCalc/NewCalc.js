@@ -4,10 +4,9 @@ import Header from '../Header'
 import TextField from '@material-ui/core/TextField';
 import dayjs from 'dayjs'
 import Button  from '@material-ui/core/Button';
-import firebase from '../../firebase'
 
 
-export default class PageNewCalc extends Component {
+export default class NewCalc extends Component {
 
 constructor(props){
     super(props)
@@ -16,13 +15,9 @@ constructor(props){
         dataFim: '',
     }
     this.calcular = this.calcular.bind(this)
+    this.CallNewCal = this.CallNewCal.bind(this)
 }
-componentDidMount(){
-  //Verificar se tem algum usuario logado!
-  if(!firebase.getCurrent()){
-    return this.props.history.replace('/login');
-  }
-}
+
 
 calcular(e){
     //Recebe duas váriaveis, uma para data Fim e data Inicio
@@ -37,6 +32,7 @@ calcular(e){
     if(PeriodoContriTotal % 1 === 0  ){
         console.log('Período exato em anos', PeriodoContriTotal)
     }
+    
     //Se o periodo de diferença for decimal irá pegar o valor decimal e multiplicar por 12
     //Para descobrir quantos meses tem nesse período
     //Meses = valor após a 'virgula' X 12
@@ -66,13 +62,13 @@ calcular(e){
             console.log(PeriodoMesesTotal)
             periodoDiasTotal = parseInt(periodoDiasTotal)
             console.log(periodoDiasTotal)
-            // alert(`Contribuição total: ${PeriodoContriTotal} Anos ${PeriodoMesesTotal} Meses e ${periodoDiasTotal} dias`)
+            alert(`Contribuição total: ${PeriodoContriTotal} Anos ${PeriodoMesesTotal} Meses e ${periodoDiasTotal} dias`)
         }
     }
-    
     //função para o navegador não atualizar após o calculo
     e.preventDefault()
 }
+
 render() {
 return (
         <div>
@@ -80,35 +76,32 @@ return (
             <div className="manual-container"> 
                 <h3>Nova Contribuição</h3>
                 <form className="data-inputs">
-                  <TextField
-                      value={this.state.dataInicio}
-                      id="date"
-                      label="Data início"
-                      type="date"
-                      InputLabelProps={{
-                      shrink: true,
-                      }}
-                      onChange={(e) => this.setState({dataInicio: e.target.value})}
-                  />
-                  <h3>{this.state.dataInicio}</h3>
-                  <TextField
-                      className="data-picker"
-                      value={this.state.dataFim}
-                      id="date"
-                      label="Data Fim"
-                      type="date"
-                      InputLabelProps={{
-                      shrink: true,
-                      }}
-                      onChange={(e) => this.setState({dataFim: e.target.value})}
-                  />
+                <TextField
+                    value={this.state.dataInicio}
+                    id="date"
+                    label="Data início"
+                    type="date"
+                    InputLabelProps={{
+                    shrink: true,
+                    }}
+                    onChange={(e) => this.setState({dataInicio: e.target.value})}
+                />
+                <h3>{this.state.dataInicio}</h3>
+                <TextField
+                    value={this.state.dataFim}
+                    id="date"
+                    label="Data Fim"
+                    type="date"
+                    InputLabelProps={{
+                    shrink: true,
+                    }}
+                    onChange={(e) => this.setState({dataFim: e.target.value})}
+                />
                 <h3>{this.state.dataFim}</h3>
-                    <Button variant="contained" color="primary" onClick={this.calcular}>Somar </Button>
+                    {/* <button type="submit" onClick={this.calcular}>calcular</button> */}
+                    <Button variant="contained" color="primary" onClick={this.calcular}>Salvar </Button>
+                
                 </form>
-                    <h3>Contribuição total: {this.state.PeriodoContriTotal} Anos {this.state.PeriodoMesesTotal} Meses e {this.state.periodoDiasTotal} dias</h3>
-            </div>
-            <div className="manual-container">
-              <h4>Adicione o CNIS para calcular</h4>
             </div>
         </div>
     );
