@@ -1,3 +1,22 @@
+/*Daqui pra baixo é do index.js*/
+.inputs-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.new-calc-select{
+    margin: 20px 15px auto ;
+}
+
+.text{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+
+/* Daqui pra baixo é da page CadastroManual.js*/
 .manual-container  {
     display: flex;
     flex-direction: column;
@@ -19,4 +38,5 @@
     flex-wrap: wrap;
     margin: 15px;
 }
+
 

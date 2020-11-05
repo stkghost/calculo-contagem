@@ -22,6 +22,7 @@ class Firebase {
         //método constructo para inicializar o Firebase
         app.initializeApp(firebaseConfig);
 
+        //referenciando a database para ser acessada em outros locais
         this.app = app.database()
         // this.auth = app.auth()
     }
@@ -40,7 +41,7 @@ class Firebase {
         const uid = app.auth().currentUser.uid
 
         //retornar um novo usuário na database criando tabela com nome e cpf do usuário
-        return app.database().ref('usuarios').child(uid).set({
+        return app.database().ref('usuarios/user').child(uid).set({
             name: name,
             cpf: cpf
         })
@@ -52,12 +53,22 @@ class Firebase {
         })
     }
     getCurrent(){
-        return app.auth().currentUser && app.auth().currentUser.email
+        return app.auth().currentUser && app.auth().currentUser.email 
     }
 
     //função para logou do usuário
     async logout(){
         await app.auth().signOut()
+        localStorage.removeItem('name')
+    }
+
+    async getUserName(callback){
+        if (!app.auth().currentUser){
+            return null;
+        }
+
+        const uid = app.auth().currentUser.uid;
+        await app.database().ref('usuarios/user').child(uid).once('value').then(callback);
     }
 }
 
