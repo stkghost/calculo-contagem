@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import './styles.css'
-import Header from '../Header'
 import TextField from '@material-ui/core/TextField';
 import dayjs from 'dayjs'
 import Button  from '@material-ui/core/Button';
 import firebase from '../../firebase'
-
 
 export default class CadastroManual extends Component {
 
@@ -26,7 +24,7 @@ componentDidMount(){
   }
 }
 
-calcular = async (e) => {
+calcular = async () => {
     //Recebe duas váriaveis, uma para data Fim e data Inicio
     var Inicio = dayjs(this.state.dataInicio) //.format('DD-MM-YYYY')
     var Fim = dayjs(this.state.dataFim) //.format('DD-MM-YYYY');
@@ -85,8 +83,6 @@ calcular = async (e) => {
             // alert(`Contribuição total: ${PeriodoContriTotal} Anos ${PeriodoMesesTotal} Meses e ${periodoDiasTotal} dias`)
         }
     }
-    //função para o navegador não atualizar após o calculo
-    e.preventDefault()
 }
 render() {
 return (
@@ -121,9 +117,6 @@ return (
                     <Button variant="contained" color="primary" onClick={this.calcular}>Somar </Button>
                 </form>
                     <h6>{this.state.ContriTotal}</h6>
-                    <div className="manual-container">
-                        <h4>Adicione o CNIS para calcular</h4>
-                    </div>
             </div>
             
     );

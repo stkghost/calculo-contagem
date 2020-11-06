@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import './styles.css'
 import Header from '../Header'
-import TextField from '@material-ui/core/TextField';
 import dayjs from 'dayjs'
-import Button  from '@material-ui/core/Button';
+import Modal from 'react-modal'
 import firebase from '../../firebase'
 import CadastroManual from './CadastroManual'
-
+import { IconButton, Button, TextField } from '@material-ui/core';
+import CloseIcon from '@material-ui/icons/Close';
 
 export default class PageNewCalc extends Component {
 
@@ -14,11 +14,11 @@ constructor(props){
     super(props)
     this.state = {
         clienteName: '',
-        clienteCpf: '',
+        cpfCliente: '',
         dataNascimentoCliente: '',
+        idadeCliente: '',
         isOpen: false,
     }
-    this.startCalc = this.startCalc.bind(this)
 }
 
 componentDidMount(){
@@ -28,15 +28,18 @@ componentDidMount(){
   }
 }
 
+
 toggleModal = () => {
+
+    var now = dayjs()
+    var nascimento = dayjs(this.state.dataNascimentoCliente)
+
+    var idadeTotal = nascimento.diff(now, 'year', 'month', 'day')
+    console.log(idadeTotal)
+
     this.setState({
         isOpen: !this.state.isOpen
     })
-}
-
-startCalc(e) {
-    e.preventDefault();
-
 }
 
 render() {
@@ -73,7 +76,7 @@ return (
                         className="data-picker"
                         value={this.state.dataNascimentoCliente}
                         id="date"
-                        label="Data Fim"
+                        label="Data de Nascimento"
                         type="date"
                         InputLabelProps={{
                         shrink: true,
@@ -81,13 +84,31 @@ return (
                         onChange={(e) => this.setState({dataNascimentoCliente: e.target.value})}
                     />
                 </div>
-                    {this.state.isOpen && (
-                        <CadastroManual />
-                    )}
                     <Button onClick={this.toggleModal}>Começar</Button>
-
-                    
+                    <Modal 
+                        style={{
+                            overlay: {
+                                top: '90px',
+                                left: '90px',
+                                right: '90px',
+                                bottom: '90px',
+                                background: '#fff',
+                            }, 
+                            content: {
+                                margin: '-40px'
+                            }
+                        }}
+                        isOpen={this.state.isOpen}>
+                        <sapn>{this.state.nameCliente}</sapn>
+                        <sapn>{this.state.cpfCliente}</sapn>
+                        <sapn>{this.state.dataNascimentoCliente}</sapn>
+                        <CadastroManual />
+                        <IconButton onClick={this.toggleModal}>
+                            <CloseIcon />
+                        </IconButton>
+                    </Modal>
             </div>
+
         </div>
     );
 }
