@@ -18,6 +18,7 @@ constructor(props){
         dataNascimentoCliente: '',
         idadeCliente: '',
         isOpen: false,
+        idadeTotal: '',
     }
 }
 
@@ -31,11 +32,14 @@ componentDidMount(){
 
 toggleModal = () => {
 
+    let state = this.state
     var now = dayjs()
     var nascimento = dayjs(this.state.dataNascimentoCliente)
 
-    var idadeTotal = nascimento.diff(now, 'year', 'month', 'day')
-    console.log(idadeTotal)
+    var calcIdade = now.diff(nascimento, 'year', 'month', 'day')
+    calcIdade = parseInt(calcIdade)
+    this.setState({idadeTotal: calcIdade})
+    console.log(state.idadeTotal)
 
     this.setState({
         isOpen: !this.state.isOpen
@@ -99,9 +103,9 @@ return (
                             }
                         }}
                         isOpen={this.state.isOpen}>
-                        <sapn>{this.state.nameCliente}</sapn>
-                        <sapn>{this.state.cpfCliente}</sapn>
-                        <sapn>{this.state.dataNascimentoCliente}</sapn>
+                        <sapn>{this.state.nameCliente}</sapn><br></br>
+                        <sapn>{this.state.cpfCliente}</sapn><br></br>
+                        <sapn>{this.state.idadeTotal}</sapn><br></br>
                         <CadastroManual />
                         <IconButton onClick={this.toggleModal}>
                             <CloseIcon />
