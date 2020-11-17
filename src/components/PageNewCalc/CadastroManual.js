@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './styles.css'
 import TextField from '@material-ui/core/TextField';
 import dayjs from 'dayjs'
-import Button  from '@material-ui/core/Button';
+import {Button, MenuItem, FormControl, InputLabel, Select }  from '@material-ui/core';
 import firebase from '../../firebase'
 
 export default class CadastroManual extends Component {
@@ -14,6 +14,8 @@ constructor(props){
         dataFim: '',
         ContriTotal: '',
         userName: '',
+        empregoCliente: '',
+        tipoAposentadoria: '',
     }
     this.calcular = this.calcular.bind(this)
 }
@@ -68,14 +70,6 @@ calcular = async () => {
             console.log(periodoDiasTotal)
 
             
-            
-            //Cria no banco de dados uma tabela dentro do usuário chamada cálculos onde irá salvar cada contribuição salva
-            let calculos = firebase.app.ref('usuarios/user/calculos')
-            let chave = calculos.push().key
-            await calculos.child(chave).set({
-                contriInicio: this.state.dataInicio,
-                contriFim: this.state.dataFim,
-            })
 
             let state = this.state 
             state.ContriTotal = `Contribuição Total: ${PeriodoContriTotal} Anos ${PeriodoMesesTotal} meses e ${periodoDiasTotal} dias`
@@ -90,31 +84,63 @@ return (
                 
                 <h3>Nova Contribuição</h3>
                 <form className="data-inputs">
-                
-                  <TextField
-                      value={this.state.dataInicio}
-                      id="date"
-                      label="Data início"
-                      type="date"
-                      InputLabelProps={{
-                      shrink: true,
-                      }}
-                      onChange={(e) => this.setState({dataInicio: e.target.value})}
-                  />
-                  <h3>{this.state.dataInicio}</h3>
-                  <TextField
-                      className="data-picker"
-                      value={this.state.dataFim}
-                      id="date"
-                      label="Data Fim"
-                      type="date"
-                      InputLabelProps={{
-                      shrink: true,
-                      }}
-                      onChange={(e) => this.setState({dataFim: e.target.value})}
-                  />
-                <h3>{this.state.dataFim}</h3>
-                    <Button variant="contained" color="primary" onClick={this.calcular}>Somar </Button>
+                <div className="inputs">
+                    <TextField
+                        value={this.state.empregoCliente}
+                        id="Vinculo"
+                        label="Vínculo"
+                        type="text"
+                        InputLabelProps={{
+                        shrink: true,
+                        }}
+                        onChange={(e) => this.setState({empregoCliente: e.target.value})}
+                    />
+                  </div>
+                  <div className="inputs">
+                    <TextField
+                        value={this.state.dataInicio}
+                        id="dateInicio"
+                        label="Data início"
+                        type="date"
+                        InputLabelProps={{
+                        shrink: true,
+                        }}
+                        onChange={(e) => this.setState({dataInicio: e.target.value})}
+                    />
+                    </div>
+                    <div className="inputs">
+                        <TextField
+                            className="data-picker"
+                            value={this.state.dataFim}
+                            id="dateFim"
+                            label="Data Fim"
+                            type="date"
+                            InputLabelProps={{
+                            shrink: true,
+                            }}
+                            onChange={(e) => this.setState({dataFim: e.target.value})}
+                        />
+                    </div>
+                    <div className="inputs">
+                        <FormControl >
+                            <InputLabel shrink id="demo-simple-select-placeholder-label-label">Atividade</InputLabel>
+                            <Select
+                            displayEmpty
+                            labelId="demo-simple-select-placeholder-label"
+                            id="demo-simple-select-placeholder-label"
+                            value={this.state.tipoAposentadoria}
+                            onChange={(e) => this.setState({tipoAposentadoria: e.target.value})}
+                            >
+                                <MenuItem value={'Normal'}>Normal</MenuItem>
+                                <MenuItem value={'Rural'}>Rural</MenuItem>
+                                <MenuItem value={'EspecialQuinze'}>Especial 15</MenuItem>
+                                <MenuItem value={'EspecialVinte'}>Especial 20</MenuItem>
+                                <MenuItem value={'EspecialVinteCinco'}>Especial 25</MenuItem>
+                                <MenuItem value={'Professor'}>Professor</MenuItem>
+                            </Select>
+                        </FormControl>
+                        </div>
+                    <div className="inputs"><Button variant="contained" color="primary" onClick={this.calcular}>Somar </Button></div>
                 </form>
                     <h6>{this.state.ContriTotal}</h6>
             </div>

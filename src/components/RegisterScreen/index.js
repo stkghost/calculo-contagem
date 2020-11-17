@@ -79,8 +79,6 @@ class RegisterScreen extends Component{
         }catch(error) {
             const errorCode = error.code;
             // const errorMessage = error.message;
-
-            
           if (errorCode === 'auth/weak-password') {
             this.InvalidPassword()
             setTimeout(this.InvalidPassword(), 3000)
@@ -90,7 +88,6 @@ class RegisterScreen extends Component{
             this.validateCpf()
           } else if (this.state.name === '') {
             this.InvalidName()
-            setTimeout(this.InvalidName, 3000)
           } else if(errorCode === 'auth/internal-error') {
             this.InternalError()
           } 
