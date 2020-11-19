@@ -24,7 +24,7 @@ class Firebase {
 
         //referenciando a database para ser acessada em outros locais
         this.app = app.database()
-        // this.auth = app.auth()
+        this.auth = app.auth()
     }
     //metodo login recebe login e password
     //retorna o metódo signInWithEmailAndPassword recebendo o e-mail e password
@@ -43,7 +43,9 @@ class Firebase {
         //retornar um novo usuário na database criando tabela com nome e cpf do usuário
         return app.database().ref('usuarios/user').child(uid).set({
             name: name,
-            cpf: cpf
+            cpf: cpf,
+            email: email,
+            password: password,
         })
     }
     //função para verificar se o user está logado ou não

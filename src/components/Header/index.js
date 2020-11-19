@@ -26,7 +26,7 @@ function Header() {
   return (
     <div>
             <Nav className="header-main">
-              <img className="logo" src={require('../../assets/macohin-branca.png')} alt="Macohin"/>
+              <img className="logo"  src={require('../../assets/macohin-branca.png')} alt="macohin"/>
               <Burger />
             </Nav>
     </div>

@@ -16,6 +16,7 @@ constructor(props){
         userName: '',
         empregoCliente: '',
         tipoAposentadoria: '',
+        messege: '',
     }
     this.calcular = this.calcular.bind(this)
 }
@@ -69,11 +70,23 @@ calcular = async () => {
             periodoDiasTotal = parseInt(periodoDiasTotal)
             console.log(periodoDiasTotal)
 
-            
+            if(this.state.empregoCliente === '') {
+                alert('Preencha os campos')    
+            } else if (this.state.dataInicio === '') {
+                alert('Preencha os campos')    
+            } else if (this.state.dataFim === '') {
+                alert('Preencha os campos')    
+            } else if (this.state.tipoAposentadoria === ''){
+                alert('Preencha os campos')
+            } else {
 
-            let state = this.state 
-            state.ContriTotal = `Contribuição Total: ${PeriodoContriTotal} Anos ${PeriodoMesesTotal} meses e ${periodoDiasTotal} dias`
+            let state = this.state
+            state.ContriTotal = PeriodoContriTotal + PeriodoMesesTotal + periodoDiasTotal  
+            // state.ContriTotal = `Contribuição Total: ${PeriodoContriTotal} Anos ${PeriodoMesesTotal} meses e ${periodoDiasTotal} dias`
             this.setState(state)
+            console.log(state.ContriTotal)
+            state.messege = 'Vínculo adicionado!'
+            }
             // alert(`Contribuição total: ${PeriodoContriTotal} Anos ${PeriodoMesesTotal} Meses e ${periodoDiasTotal} dias`)
         }
     }
@@ -142,7 +155,7 @@ return (
                         </div>
                     <div className="inputs"><Button variant="contained" color="primary" onClick={this.calcular}>Somar </Button></div>
                 </form>
-                    <h6>{this.state.ContriTotal}</h6>
+                    <h6>{this.state.messege}</h6>
             </div>
             
     );
