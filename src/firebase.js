@@ -19,7 +19,7 @@ import 'firebase/auth'; //import firebase.auth
 //class para inicializar o firebase
 class Firebase {
     constructor(){
-        //método constructo para inicializar o Firebase
+        //método constructor para inicializar o Firebase
         app.initializeApp(firebaseConfig);
 
         //referenciando a database para ser acessada em outros locais

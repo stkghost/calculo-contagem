@@ -79,7 +79,6 @@ calcular = async () => {
             } else if (this.state.tipoAposentadoria === ''){
                 alert('Preencha os campos')
             } else {
-
             let state = this.state
             state.ContriTotal = PeriodoContriTotal + PeriodoMesesTotal + periodoDiasTotal  
             // state.ContriTotal = `Contribuição Total: ${PeriodoContriTotal} Anos ${PeriodoMesesTotal} meses e ${periodoDiasTotal} dias`
@@ -87,7 +86,6 @@ calcular = async () => {
             console.log(state.ContriTotal)
             state.messege = 'Vínculo adicionado!'
             }
-            // alert(`Contribuição total: ${PeriodoContriTotal} Anos ${PeriodoMesesTotal} Meses e ${periodoDiasTotal} dias`)
         }
     }
 }
@@ -153,7 +151,7 @@ return (
                             </Select>
                         </FormControl>
                         </div>
-                    <div className="inputs"><Button variant="contained" color="primary" onClick={this.calcular}>Somar </Button></div>
+                    <div className="inputs"><Button variant="contained" color="primary" onClick={this.calcular}>Adicionar</Button></div>
                 </form>
                     <h6>{this.state.messege}</h6>
             </div>

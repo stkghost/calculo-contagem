@@ -15,7 +15,7 @@ export default class PageNewCalc extends Component {
 constructor(props){
     super(props)
     this.state = {
-        calculos: [],
+        clientes: [],
         clienteName: '',
         cpfCliente: '',
         dataNascimentoCliente: '',
@@ -30,6 +30,12 @@ constructor(props){
 
 componentDidMount(){
 
+    //Verificar se tem algum usuario logado!
+    if(!firebase.getCurrent()){
+        return this.props.history.replace('/login');
+      }
+
+
     firebase.app.ref('clientes').on('value', (snapshot) => {
         let state = this.state;
         state.clientes = []
@@ -43,10 +49,8 @@ componentDidMount(){
         })
         this.setState(state)
     })
-  //Verificar se tem algum usuario logado!
-  if(!firebase.getCurrent()){
-    return this.props.history.replace('/login');
-  }
+  
+ 
 }
 closeModal() {
     let state = this.state
@@ -80,21 +84,21 @@ toggleModal = async () => {
     this.setState({
         isOpen: !this.state.isOpen
     })
-    document.getElementById('infos').style.display="flex"
+    document.getElementById('infos').style.display="block"
     document.getElementById('form-cliente').style.display="none"
 
     
     //Cria no banco de dados uma tabela dentro do usuário chamada cálculos onde irá salvar cada contribuição salva
     //pegar o id do usuário para referenciar no banco de dados
-    // const uid = firebase.auth().currentUser.uid
+    var clientes = firebase.app.ref('clientes');
+    var chave = calculos.push().key;
+    await calculos.child(chave).set({
+        nomeCliente: this.state.clienteName,
+        nascimentoCliente: this.state.dataNascimentoCliente,
+        sexo: this.state.sexoCliente,
+        clienteCpf: this.state.cpfCliente,
+    })
 
-    //     //retornar um novo cliente na database criando tabela com nome e cpf do usuário
-    //     return firebase.database().ref('usuarios/clientes').child(uid).set({
-    //         clienteName: this.state.clienteName,
-    //         cpfCliente: this.state.cpfCliente,
-    //         dataNascimentoCliente: this.state.dataNascimentoCliente,
-    //         sexoCliente: this.state.sexoCliente
-    //     })
     }
 // }
 render() {
@@ -103,10 +107,12 @@ return (
             <Header />
             
             <div className="cliente-container">
-                <div id="infos" style={{display: "none"}}>
+                <div id="infos" style={{display: "none", margin: '25px', alignSelf: 'start'}}>
                     <span>Cliente: {this.state.clienteName}</span><br/>
                     <span>CPF: {this.state.cpfCliente}</span><br/>
                     <span>Idade: {this.state.idadeTotal}</span><br/>
+
+                    <span>Vínculo</span>
                 </div>
                 <div id="form-cliente" className="inputs-container">
                     <div  className="new-calc-select">
