@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './styles.css'
+import Axios from 'axios';
 import Header from '../Header'
 import dayjs from 'dayjs'
 import Modal from 'react-modal'
@@ -28,6 +29,7 @@ constructor(props){
     this.closeModal = this.closeModal.bind(this)
 }
 
+    
 componentDidMount(){
 
     //Verificar se tem algum usuario logado!
@@ -90,15 +92,14 @@ toggleModal = async () => {
     
     //Cria no banco de dados uma tabela dentro do usuário chamada cálculos onde irá salvar cada contribuição salva
     //pegar o id do usuário para referenciar no banco de dados
-    var clientes = firebase.app.ref('clientes');
-    var chave = calculos.push().key;
-    await calculos.child(chave).set({
-        nomeCliente: this.state.clienteName,
-        nascimentoCliente: this.state.dataNascimentoCliente,
-        sexo: this.state.sexoCliente,
-        clienteCpf: this.state.cpfCliente,
+    Axios.post("http://localhost:3001/api/insert", {
+        clienteName: state.clienteName,
+        clienteCpf: state.cpfCliente,
+        clienteNascimento: state.dataNascimentoCliente,
+        clienteSexo: state.sexoCliente
+    }).then(() => {
+        alert("Sucesso caralho")
     })
-
     }
 // }
 render() {

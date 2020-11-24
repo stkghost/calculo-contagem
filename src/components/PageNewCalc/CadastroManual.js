@@ -86,6 +86,13 @@ calcular = async () => {
             console.log(state.ContriTotal)
             state.messege = 'Vínculo adicionado!'
             }
+
+            var contri = firebase.app.ref('calculos/contribuicao')
+            var chave = contri.push().key
+            await contri.child(chave).set({
+                vinculo: this.state.empregoCliente,
+                
+            })
         }
     }
 }
