@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import './styles.css'
 import TextField from '@material-ui/core/TextField';
+import Axios from 'axios';
 import dayjs from 'dayjs'
 import {Button, MenuItem, FormControl, InputLabel, Select }  from '@material-ui/core';
 import firebase from '../../firebase'
+import { Link } from 'react-router-dom';
 
 export default class CadastroManual extends Component {
 
@@ -14,9 +16,10 @@ constructor(props){
         dataFim: '',
         ContriTotal: '',
         userName: '',
-        empregoCliente: '',
-        tipoAposentadoria: '',
+        empresa: '',
+        tipoAtividade: '',
         messege: '',
+        clienteCpf: localStorage.clienteCpf
     }
     this.calcular = this.calcular.bind(this)
 }
@@ -70,48 +73,58 @@ calcular = async () => {
             periodoDiasTotal = parseInt(periodoDiasTotal)
             console.log(periodoDiasTotal)
 
-            if(this.state.empregoCliente === '') {
+            if(this.state.empresa === '') {
                 alert('Preencha os campos')    
             } else if (this.state.dataInicio === '') {
                 alert('Preencha os campos')    
             } else if (this.state.dataFim === '') {
                 alert('Preencha os campos')    
-            } else if (this.state.tipoAposentadoria === ''){
+            } else if (this.state.tipoAtividade === ''){
                 alert('Preencha os campos')
             } else {
-            let state = this.state
+            var state = this.state
             state.ContriTotal = PeriodoContriTotal + PeriodoMesesTotal + periodoDiasTotal  
-            // state.ContriTotal = `Contribuição Total: ${PeriodoContriTotal} Anos ${PeriodoMesesTotal} meses e ${periodoDiasTotal} dias`
             this.setState(state)
             console.log(state.ContriTotal)
-            state.messege = 'Vínculo adicionado!'
             }
-
-            var contri = firebase.app.ref('calculos/contribuicao')
-            var chave = contri.push().key
-            await contri.child(chave).set({
-                vinculo: this.state.empregoCliente,
-                
-            })
+        
         }
     }
+
+    Axios.post("http://localhost:3001/api/insert/vinculo", {
+            empresa: state.empresa,
+            tipoAtividade: state.tipoAtividade,
+            dataFim: state.dataFim,
+            dataInicio: state.dataInicio,
+            userCpf: localStorage.userCpf,
+            clienteCpf: localStorage.clienteCpf,
+            clienteId: localStorage.clienteCpf+''+localStorage.userCpf,
+            
+        }).then(() => {
+        })
+        this.setState({
+            empresa: '',
+            tipoAtividade: '',
+            dataFim: '',
+            dataInicio: ''
+        })
+        state.messege = 'Vínculo adicionado!'
 }
 render() {
 return (
             <div className="manual-container"> 
-                
-                <h3>Nova Contribuição</h3>
+
                 <form className="data-inputs">
                 <div className="inputs">
                     <TextField
-                        value={this.state.empregoCliente}
+                        value={this.state.empresa}
                         id="Vinculo"
                         label="Vínculo"
                         type="text"
                         InputLabelProps={{
                         shrink: true,
                         }}
-                        onChange={(e) => this.setState({empregoCliente: e.target.value})}
+                        onChange={(e) => this.setState({empresa: e.target.value})}
                     />
                   </div>
                   <div className="inputs">
@@ -146,8 +159,8 @@ return (
                             displayEmpty
                             labelId="demo-simple-select-placeholder-label"
                             id="demo-simple-select-placeholder-label"
-                            value={this.state.tipoAposentadoria}
-                            onChange={(e) => this.setState({tipoAposentadoria: e.target.value})}
+                            value={this.state.tipoAtividade}
+                            onChange={(e) => this.setState({tipoAtividade: e.target.value})}
                             >
                                 <MenuItem value={'Normal'}>Normal</MenuItem>
                                 <MenuItem value={'Rural'}>Rural</MenuItem>
@@ -161,6 +174,7 @@ return (
                     <div className="inputs"><Button variant="contained" color="primary" onClick={this.calcular}>Adicionar</Button></div>
                 </form>
                     <h6>{this.state.messege}</h6>
+                    <Link className='finalizar-button'color="primary" to="/resultado">Finalizar</Link>
             </div>
             
     );

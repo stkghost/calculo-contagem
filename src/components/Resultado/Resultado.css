@@ -1,0 +1,14 @@
+.resultados-container {
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff;
+    justify-content: center;
+    align-items: start;
+    width: auto;
+    padding-left: 25px;
+    margin: 50px 250px; 
+    border-radius: 5px;
+    height: 250px;
+    -webkit-box-shadow: 0px 0px 20px -3px #000000; 
+    box-shadow: 0px 0px 20px -3px #000000;
+}

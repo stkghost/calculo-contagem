@@ -6,7 +6,8 @@ import HomeScreen from './HomeScreen'
 import LoginScreen from './LoginScreen'
 import RegisterScreen from './RegisterScreen'
 import PageNewCalc from './PageNewCalc'
-
+import Calculos from './Calculos'
+import Resultado from './Resultado'
 
 class App extends Component {
 
@@ -26,9 +27,11 @@ class App extends Component {
       <BrowserRouter>
         <Switch>
           <Route exact path="/login" component={LoginScreen}/>
-          <Route exact path="/register" component={RegisterScreen}/>
-          <Route exact path="/home" component={HomeScreen}/>   
-          <Route exact path="/newCalc" component={PageNewCalc}/>          
+          <Route path="/register" component={RegisterScreen}/>
+          <Route path="/home" component={HomeScreen}/>   
+          <Route path="/newCalc" component={PageNewCalc}/>
+          <Route path="/calculos" component={Calculos}/>   
+          <Route path="/resultado" component={Resultado}/>          
         </Switch>
       </BrowserRouter>
     ) : (

@@ -53,6 +53,9 @@
 
 .inputs{
     margin: 15px;
-    justify-self: ;
+    justify-self: center;
 }
 
+.finalizar-button {
+    text-decoration: none;
+}

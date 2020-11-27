@@ -17,14 +17,18 @@ constructor(props){
     super(props)
     this.state = {
         clientes: [],
-        clienteName: '',
+        clienteNome: '',
         cpfCliente: '',
+        clienteCpf: '',
         dataNascimentoCliente: '',
         idadeCliente: '',
         isOpen: false,
         idadeTotal: '',
         sexoCliente: '',
         messegeError: '',
+        userCpf: localStorage.userCpf,
+        currentClientId: localStorage.currentClientId,
+        renderList: [],
         }
     this.closeModal = this.closeModal.bind(this)
 }
@@ -35,23 +39,7 @@ componentDidMount(){
     //Verificar se tem algum usuario logado!
     if(!firebase.getCurrent()){
         return this.props.history.replace('/login');
-      }
-
-
-    firebase.app.ref('clientes').on('value', (snapshot) => {
-        let state = this.state;
-        state.clientes = []
-        snapshot.forEach((childItem) => {
-            state.clientes.push({
-                key: childItem.key,
-                clienteName: childItem.val().clienteName,
-                cpfCliente: childItem.val().cpfCliente,
-                dataNascimentoCliente: childItem.val().dataNascimentoCliente
-            })
-        })
-        this.setState(state)
-    })
-  
+      }  
  
 }
 closeModal() {
@@ -61,45 +49,51 @@ closeModal() {
     })
 }
 
-toggleModal = async () => {
-    let state = this.state
+toggleModal = () => {
+        var state = this.state
 
-    let isValid = validate(state.cpfCliente)
-    // if (this.state.clienteName === ''){
-    //     alert('Digite o nome do cliente')
-    // } else if (!isValid == true ){
-    //     alert('CPF Inválido')
-    // } else if (this.state.dataNascimentoCliente === ''){
-    //     alert('Digite a data de nascimento do cliente')
-    // } else if (this.state.sexoCliente === ''){
-    //     alert('Selecione o gênero')
-    // } else {   
+        let isValid = validate(state.cpfCliente)
+        // if (this.state.clienteNome === ''){
+        //     alert('Digite o nome do cliente')
+        // } else if (!isValid == true ){
+        //     alert('CPF Inválido')
+        // } else if (this.state.dataNascimentoCliente === ''){
+        //     alert('Digite a data de nascimento do cliente')
+        // } else if (this.state.sexoCliente === ''){
+        //     alert('Selecione o gênero')
+        // } else {   
 
-    var now = dayjs()
-    var nascimento = dayjs(this.state.dataNascimentoCliente)
+        var now = dayjs()
+        var nascimento = dayjs(this.state.dataNascimentoCliente)
 
-    var calcIdade = now.diff(nascimento, 'year', 'month', 'day')
-    calcIdade = parseInt(calcIdade)
-    this.setState({idadeTotal: calcIdade})
-    console.log(state.idadeTotal)
+        var calcIdade = now.diff(nascimento, 'year', 'month', 'day')
+        calcIdade = parseInt(calcIdade)
+        this.setState({idadeTotal: calcIdade})
+        console.log(state.idadeTotal)
 
-    this.setState({
-        isOpen: !this.state.isOpen
-    })
-    document.getElementById('infos').style.display="block"
-    document.getElementById('form-cliente').style.display="none"
+        this.setState({
+            isOpen: !this.state.isOpen
+        })
 
+        document.getElementById('infos').style.display="block"
+        document.getElementById('form-cliente').style.display="none"
+
+        //Cria no banco de dados uma tabela dentro do usuário chamada cálculos onde irá salvar cada contribuição salva
+        //pegar o id do usuário para referenciar no banco de dados
+        Axios.post("http://localhost:3001/api/insert", {
+            clienteNome: state.clienteNome,
+            clienteCpf: state.cpfCliente,
+            clienteNascimento: state.dataNascimentoCliente,
+            clienteSexo: state.sexoCliente,
+            userCpf: state.userCpf,
+            clienteId: state.cpfCliente+''+state.userCpf,
+
+        }).then(() => {
+            console.log('Cliente cadastrado')
+        })
     
-    //Cria no banco de dados uma tabela dentro do usuário chamada cálculos onde irá salvar cada contribuição salva
-    //pegar o id do usuário para referenciar no banco de dados
-    Axios.post("http://localhost:3001/api/insert", {
-        clienteName: state.clienteName,
-        clienteCpf: state.cpfCliente,
-        clienteNascimento: state.dataNascimentoCliente,
-        clienteSexo: state.sexoCliente
-    }).then(() => {
-        alert("Sucesso caralho")
-    })
+        localStorage.clienteCpf = state.cpfCliente
+        console.log(localStorage.clienteCpf)
     }
 // }
 render() {
@@ -109,22 +103,21 @@ return (
             
             <div className="cliente-container">
                 <div id="infos" style={{display: "none", margin: '25px', alignSelf: 'start'}}>
-                    <span>Cliente: {this.state.clienteName}</span><br/>
+                    <span>Cliente: {this.state.clienteNome}</span><br/>
                     <span>CPF: {this.state.cpfCliente}</span><br/>
                     <span>Idade: {this.state.idadeTotal}</span><br/>
-
                     <span>Vínculo</span>
                 </div>
                 <div id="form-cliente" className="inputs-container">
                     <div  className="new-calc-select">
                         <TextField
-                            value={this.state.clienteName}
+                            value={this.state.clienteNome}
                             label="Nome Cliente"
                             type="text"
                             InputLabelProps={{
                             shrink: true,
                             }}
-                            onChange={(e) => this.setState({clienteName: e.target.value})}
+                            onChange={(e) => this.setState({clienteNome: e.target.value})}
                             />
                     </div>
                     <div className="new-calc-select">
@@ -163,8 +156,8 @@ return (
                                 value={this.state.sexoCliente}
                                 onChange={(e) => this.setState({sexoCliente: e.target.value})}
                             >
-                            <MenuItem value={'masculino'}>Masculino</MenuItem>
-                            <MenuItem value={'feminino'}>Feminino</MenuItem>
+                            <MenuItem value={'m'}>Masculino</MenuItem>
+                            <MenuItem value={'f'}>Feminino</MenuItem>
                             </Select>
                     </FormControl>  
                     </div>

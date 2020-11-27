@@ -1,14 +1,13 @@
 import React, {Component} from 'react'
 import Header from '../Header'
 import firebase from '../../firebase'
+import './Resultado.css'
 
-export default class HomeScreen extends Component {
+export default class Resultado extends Component {
 
     constructor(props){
         super(props)
         this.state = {
-            name: localStorage.name,
-            userCpf: localStorage.userCpf
         }
     }
     
@@ -29,9 +28,15 @@ export default class HomeScreen extends Component {
         return(
             <div>
                 <Header />
-                <h3>Olá {this.state.name}</h3>
-                <h3>{this.state.userCpf}</h3>
-                <h1>Tela principal</h1>
+                <h5>Olá {this.state.name}</h5>
+                <h5>{this.state.userCpf}</h5>
+                <div className="resultados-container"> 
+                    <h2>Aposentadoria por tempo de contribuição</h2>
+                    <p>......................</p>
+                    <h5>Idade: 65 anos</h5>
+                    <h5>Tempo de contribuição: 16,5 anos</h5>
+                    <h3 style={{color: 'green'}}>Apto</h3>
+                </div>
             </div>
         )
     }
