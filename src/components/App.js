@@ -8,6 +8,7 @@ import RegisterScreen from './RegisterScreen'
 import PageNewCalc from './PageNewCalc'
 import Calculos from './Calculos'
 import Resultado from './Resultado'
+import EditarCalculo from './EditarCalculo'
 
 class App extends Component {
 
@@ -31,7 +32,8 @@ class App extends Component {
           <Route path="/home" component={HomeScreen}/>   
           <Route path="/newCalc" component={PageNewCalc}/>
           <Route path="/calculos" component={Calculos}/>   
-          <Route path="/resultado" component={Resultado}/>          
+          <Route path="/resultado" component={Resultado}/>  
+          <Route path="/editar" component={EditarCalculo}/>          
         </Switch>
       </BrowserRouter>
     ) : (

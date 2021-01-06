@@ -31,6 +31,7 @@ componentDidMount(){
 }
 
 calcular = async () => {
+    let state = this.state
     //Recebe duas váriaveis, uma para data Fim e data Inicio
     var Inicio = dayjs(this.state.dataInicio) //.format('DD-MM-YYYY')
     var Fim = dayjs(this.state.dataFim) //.format('DD-MM-YYYY');
@@ -82,7 +83,7 @@ calcular = async () => {
             } else if (this.state.tipoAtividade === ''){
                 alert('Preencha os campos')
             } else {
-            var state = this.state
+            let state = this.state
             state.ContriTotal = PeriodoContriTotal + PeriodoMesesTotal + periodoDiasTotal  
             this.setState(state)
             console.log(state.ContriTotal)

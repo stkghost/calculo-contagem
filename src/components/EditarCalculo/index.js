@@ -11,29 +11,16 @@ import CloseIcon from '@material-ui/icons/Close';
 import {validate} from 'gerador-validador-cpf';
 
 
-export default class PageNewCalc extends Component {
+export default class EditarCalculo extends Component {
 
 constructor(props){
     super(props)
     this.state = {
-        clientes: [],
-        clienteNome: '',
-        cpfCliente: '',
-        clienteCpf: '',
-        dataNascimentoCliente: '',
-        idadeCliente: '',
-        isOpen: false,
-        idadeTotal: '',
-        sexoCliente: '',
-        messegeError: '',
-        userCpf: localStorage.userCpf,
-        currentClientId: localStorage.currentClientId,
-        renderList: [],
+        
         }
     this.closeModal = this.closeModal.bind(this)
 }
 
-    
 componentDidMount(){
 
     //Verificar se tem algum usuario logado!
@@ -63,16 +50,16 @@ toggleModal = () => {
         //     alert('Selecione o gênero')
         // } else {   
 
-        var now = dayjs()
-        var nascimento = dayjs(this.state.dataNascimentoCliente)
+        // var now = dayjs()
+        // var nascimento = dayjs(this.state.dataNascimentoCliente)
 
-        var calcIdade = now.diff(nascimento, 'year', 'month', 'day')
-        calcIdade = parseInt(calcIdade)
-        this.setState({idadeTotal: calcIdade})
+        // var calcIdade = now.diff(nascimento, 'year', 'month', 'day')
+        // calcIdade = parseInt(calcIdade)
+        // this.setState({idadeTotal: calcIdade})
 
-        this.setState({
-            isOpen: !this.state.isOpen
-        })
+        // this.setState({
+        //     isOpen: !this.state.isOpen
+        // })
 
         document.getElementById('infos').style.display="block"
         document.getElementById('form-cliente').style.display="none"

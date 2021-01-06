@@ -18,7 +18,7 @@ export default class HomeScreen extends Component {
             this.props.history.replace('/login');
             return null;
         }
-
+        
         firebase.getUserName((info) => {
             localStorage.name = info.val().name
             localStorage.userCpf = info.val().cpf

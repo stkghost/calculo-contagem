@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import Header from '../Header'
 import firebase from '../../firebase'
 import './Resultado.css'
+import Axios from 'axios'
 
 export default class Resultado extends Component {
 
@@ -10,6 +11,7 @@ export default class Resultado extends Component {
         this.state = {
         }
     }
+    
     
     async componentDidMount(){
         //Verificar se tem algum usuario logado!
@@ -23,7 +25,19 @@ export default class Resultado extends Component {
             localStorage.userCpf = info.val().cpf
             this.setState({name: localStorage.name, userCpf: localStorage.userCpf})
         })
+
+        let state = this.state
+        await Axios.post('http://localhost:3001/api/get/resultados', {
+            userCpf: state.userCpf,
+        }) 
+        .then ((response)  => {
+            console.log(response)
+            const datas = {renderList: response.data}
+            this.setState(datas)
+            
+        })
       }
+      
     render() {
         return(
             <div>
