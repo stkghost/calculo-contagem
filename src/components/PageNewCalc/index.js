@@ -90,7 +90,7 @@ toggleModal = () => {
         }).then(() => {
             console.log('Cliente cadastrado')
         })
-    
+        localStorage.clienteNome = state.clienteNome
         localStorage.clienteCpf = state.cpfCliente
         console.log(localStorage.clienteCpf)
     }
@@ -117,7 +117,7 @@ return (
                             shrink: true,
                             }}
                             onChange={(e) => this.setState({clienteNome: e.target.value})}
-                            />
+                         />
                     </div>
                     <div className="new-calc-select">
                         <TextField
@@ -144,25 +144,25 @@ return (
                         />
                     </div>
                     <div className="new-calc-select">
-                    <FormControl>
-                        <InputLabel shrink id="demo-simple-select-placeholder-label-label">
-                        Sexo
-                        </InputLabel>
-                            <Select
-                                displayEmpty
-                                labelId="demo-simple-select-placeholder-label"
-                                id="demo-simple-select-placeholder-label"
-                                value={this.state.sexoCliente}
-                                onChange={(e) => this.setState({sexoCliente: e.target.value})}
-                            >
-                            <MenuItem value={'m'}>Masculino</MenuItem>
-                            <MenuItem value={'f'}>Feminino</MenuItem>
-                            </Select>
-                    </FormControl>  
-                    </div>
-                    <div className="new-calc-select">
-                        <Button onClick={this.toggleModal}>Começar</Button>
-                    </div>
+                        <FormControl>
+                            <InputLabel shrink id="demo-simple-select-placeholder-label-label">
+                            Sexo
+                            </InputLabel>
+                                <Select
+                                    displayEmpty
+                                    labelId="demo-simple-select-placeholder-label"
+                                    id="demo-simple-select-placeholder-label"
+                                    value={this.state.sexoCliente}
+                                    onChange={(e) => this.setState({sexoCliente: e.target.value})}
+                                >
+                                <MenuItem value={'m'}>Masculino</MenuItem>
+                                <MenuItem value={'f'}>Feminino</MenuItem>
+                                </Select>
+                        </FormControl>  
+                    </div>  
+                        <div className="new-calc-select">
+                            <Button onClick={this.toggleModal}>Começar</Button>
+                        </div>
                 </div>
                     <Modal 
                         style={{

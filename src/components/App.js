@@ -33,7 +33,7 @@ class App extends Component {
           <Route path="/newCalc" component={PageNewCalc}/>
           <Route path="/calculos" component={Calculos}/>   
           <Route path="/resultado" component={Resultado}/>  
-          <Route path="/editar" component={EditarCalculo}/>          
+          <Route path="/editar/:clienteId" render={(props) => <EditarCalculo/>}/>          
         </Switch>
       </BrowserRouter>
     ) : (

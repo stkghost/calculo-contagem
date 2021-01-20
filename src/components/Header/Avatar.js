@@ -39,7 +39,7 @@ const Avatar = () => {
                 }}
               >
                 <AccountCircleIcon fontSize="large"/>
-              </IconButton>
+            </IconButton>
               <Menu
                 id="menu-appbar"
                 anchorEl={anchorEl}

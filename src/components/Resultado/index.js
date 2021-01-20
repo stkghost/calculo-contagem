@@ -26,16 +26,16 @@ export default class Resultado extends Component {
             this.setState({name: localStorage.name, userCpf: localStorage.userCpf})
         })
 
-        let state = this.state
-        await Axios.post('http://localhost:3001/api/get/resultados', {
-            userCpf: state.userCpf,
-        }) 
-        .then ((response)  => {
-            console.log(response)
-            const datas = {renderList: response.data}
-            this.setState(datas)
+        // let state = this.state
+        // await Axios.post('http://localhost:3001/api/get/resultados', {
+        //     userCpf: state.userCpf,
+        // }) 
+        // .then ((response)  => {
+        //     console.log(response)
+        //     const datas = {renderList: response.data}
+        //     this.setState(datas)
             
-        })
+        // })
       }
       
     render() {
